@@ -1,4 +1,4 @@
 [core]
     analytics = false
-['remote "origin"']
+[remote "origin"]
     url = https://dagshub.com/tupiznak/made22-mlops.dvc
