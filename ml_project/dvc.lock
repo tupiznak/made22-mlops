@@ -6,3 +6,7 @@ stages:
     - path: mlops_homework/data/load_dataset.py
       md5: b19ff5f1214670732d56738f94ed44cd
       size: 915
+    outs:
+    - path: data/raw/heart_cleveland_upload.csv
+      md5: 9f536dad38229ca519687b116f1d632a
+      size: 11106

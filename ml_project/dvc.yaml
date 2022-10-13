@@ -3,3 +3,5 @@ stages:
     cmd: mlops_homework_download_dataset
     deps:
       - mlops_homework/data/load_dataset.py
+    outs:
+      - data/raw/heart_cleveland_upload.csv
