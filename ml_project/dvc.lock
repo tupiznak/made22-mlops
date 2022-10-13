@@ -1,0 +1,8 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: mlops_homework_download_dataset
+    deps:
+    - path: mlops_homework/data/load_dataset.py
+      md5: b19ff5f1214670732d56738f94ed44cd
+      size: 915
