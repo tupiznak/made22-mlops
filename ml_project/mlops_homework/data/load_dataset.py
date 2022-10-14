@@ -1,7 +1,8 @@
 import logging
-from pathlib import Path
 
 from dotenv import find_dotenv, load_dotenv
+
+from mlops_homework.data import DATA_PATH
 
 
 def main():
@@ -18,7 +19,7 @@ def main():
 
     logger.info('Downloading dataset...')
     api.dataset_download_files('cherngs/heart-disease-cleveland-uci',
-                               path=Path(__file__).parent.joinpath('../../data/raw'),
+                               path=DATA_PATH.joinpath('raw'),
                                unzip=True)
     logger.info('Dataset downloaded')
 

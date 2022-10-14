@@ -1,7 +1,14 @@
 stages:
-  prepare:
+  download data:
     cmd: mlops_homework_download_dataset
     deps:
       - mlops_homework/data/load_dataset.py
     outs:
       - data/raw/heart_cleveland_upload.csv
+  process data:
+    cmd: mlops_homework_process_dataset
+    deps:
+      - mlops_homework/data/make_dataset.py
+      - data/raw/heart_cleveland_upload.csv
+    outs:
+      - data/processed/heart_cleveland_upload.csv

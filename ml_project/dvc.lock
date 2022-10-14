@@ -10,3 +10,26 @@ stages:
     - path: data/raw/heart_cleveland_upload.csv
       md5: 9f536dad38229ca519687b116f1d632a
       size: 11106
+  download data:
+    cmd: mlops_homework_download_dataset
+    deps:
+    - path: mlops_homework/data/load_dataset.py
+      md5: a4cc102a7e9eb5fb606453321c0348a8
+      size: 910
+    outs:
+    - path: data/raw/heart_cleveland_upload.csv
+      md5: 9f536dad38229ca519687b116f1d632a
+      size: 11106
+  process data:
+    cmd: mlops_homework_process_dataset
+    deps:
+    - path: data/raw/heart_cleveland_upload.csv
+      md5: 9f536dad38229ca519687b116f1d632a
+      size: 11106
+    - path: mlops_homework/data/make_dataset.py
+      md5: ef2a81ff148d2081485bd857ebc054d0
+      size: 1312
+    outs:
+    - path: data/processed/heart_cleveland_upload.csv
+      md5: 4081be857e662023ddc3272ccc072186
+      size: 24084
