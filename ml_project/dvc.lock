@@ -27,9 +27,9 @@ stages:
       md5: 9f536dad38229ca519687b116f1d632a
       size: 11106
     - path: mlops_homework/data/make_dataset.py
-      md5: ef2a81ff148d2081485bd857ebc054d0
-      size: 1312
+      md5: d80548bae77d913d9befbba086349fd2
+      size: 1325
     outs:
     - path: data/processed/heart_cleveland_upload.csv
-      md5: 4081be857e662023ddc3272ccc072186
-      size: 24084
+      md5: 3fc0b2adefdac891e05d707a267f86a6
+      size: 23005

@@ -8,7 +8,7 @@ stages:
   process data:
     cmd: mlops_homework_process_dataset
     deps:
-      - mlops_homework/data/make_dataset.py
+      - mlops_homework/data/build_features.py
       - data/raw/heart_cleveland_upload.csv
     outs:
       - data/processed/heart_cleveland_upload.csv
