@@ -12,6 +12,7 @@ stages:
       - data/raw/heart_cleveland_upload.csv
     outs:
       - data/processed/heart_cleveland_upload.csv
+      - models/encoder_baseline.pkl
   train model:
     cmd: mlops_homework_train_baseline_model
     deps:

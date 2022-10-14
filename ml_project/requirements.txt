@@ -16,3 +16,4 @@ seaborn
 pandas-profiling[notebook]
 torch
 dvc
+pytest

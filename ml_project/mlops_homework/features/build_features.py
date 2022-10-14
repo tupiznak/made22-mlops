@@ -1,12 +1,60 @@
 import logging
+import pickle
 
 import pandas as pd
+import numpy as np
 from dotenv import find_dotenv, load_dotenv
-from sklearn.preprocessing import OneHotEncoder
-from mlops_homework.data import DATA_PATH
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from mlops_homework.data import DATA_PATH, MODEL_PATH
+from sklearn.base import BaseEstimator, TransformerMixin
 
 CAT_FEATURES_ONE_HOT = ['sex', 'cp', 'restecg', 'thal']
 CAT_FEATURES_LABEL = ['fbs', 'exang', 'slope', 'ca']
+
+
+class DataTransformer(BaseEstimator, TransformerMixin):
+
+    def __init__(self):
+        super().__init__()
+        self.encoder = OneHotEncoder()
+        self.scaler = StandardScaler()
+        self.categorical_features_idx: set[int] = set()
+        self.real_features_idx: set[int] = set()
+        self.columns: list[str] = []
+
+    def fit_categorical(self, x_data: pd.DataFrame, categorical_features):
+        self.encoder.fit(x_data[categorical_features])
+        self.categorical_features_idx = {x_data.columns.get_loc(f) for f in categorical_features}
+        self.real_features_idx = {f for f in range(x_data.shape[1])
+                                  if f not in self.categorical_features_idx}
+        categorical_features = set(categorical_features)
+        self.columns = [col for col in x_data.columns if col not in categorical_features] + \
+                       list(self.encoder.get_feature_names_out())
+        return self.encoder
+
+    def fit_scaler(self, x_data: np.ndarray):
+        self.scaler.fit(x_data)
+        return self.scaler
+
+    def fit(self, x_data: pd.DataFrame, categorical_features):
+        self.fit_categorical(x_data, categorical_features)
+        self.fit_scaler(self.transform_categorical(x_data.to_numpy()))
+        return self
+
+    def get_columns(self):
+        return self.columns
+
+    def transform_categorical(self, x_batch: np.ndarray):
+        cat_data = self.encoder.transform(x_batch[:, list(self.categorical_features_idx)]).toarray()
+        return np.concatenate((x_batch[:, list(self.real_features_idx)], cat_data), axis=1)
+
+    def transform_scaler(self, x_batch: np.ndarray):
+        return self.scaler.transform(x_batch)
+
+    def transform(self, x_batch: np.ndarray):
+        x_batch = self.transform_categorical(x_batch)
+        x_batch = self.transform_scaler(x_batch)
+        return x_batch
 
 
 def main():
@@ -19,14 +67,18 @@ def main():
     targets = df['condition']
 
     categorical_features = CAT_FEATURES_ONE_HOT
-    encoder = OneHotEncoder()
-    encoder.fit(x_input[categorical_features])
+    encoder = DataTransformer()
+    encoder.fit(x_data=x_input, categorical_features=categorical_features)
+
+    logger.info('Save encoder...')
+    with open(MODEL_PATH.joinpath('encoder_baseline.pkl'), 'wb') as file:
+        pickle.dump(encoder, file)
+
     x_transform = pd.concat(
         (
-            x_input.drop(categorical_features, axis=1),
             pd.DataFrame(
-                data=encoder.transform(x_input[categorical_features]).toarray(),
-                columns=encoder.get_feature_names_out(),
+                data=encoder.transform(x_input.to_numpy()),
+                columns=encoder.get_columns(),
             ),
             targets
         ),
