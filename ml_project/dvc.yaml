@@ -8,7 +8,14 @@ stages:
   process data:
     cmd: mlops_homework_process_dataset
     deps:
-      - mlops_homework/data/build_features.py
+      - mlops_homework/features/build_features.py
       - data/raw/heart_cleveland_upload.csv
     outs:
       - data/processed/heart_cleveland_upload.csv
+  train model:
+    cmd: mlops_homework_train_baseline_model
+    deps:
+      - data/processed/heart_cleveland_upload.csv
+      - mlops_homework/models/train_baseline_model.py
+    outs:
+      - models/baseline.pkl
