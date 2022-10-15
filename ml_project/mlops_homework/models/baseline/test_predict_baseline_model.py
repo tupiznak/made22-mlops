@@ -1,10 +1,9 @@
 from tempfile import NamedTemporaryFile
 
-import pandas as pd
 import pytest
 from sklearn.metrics import f1_score
 
-from mlops_homework.models.predict_baseline_model import predict
+from mlops_homework.models.baseline.predict_baseline_model import predict
 
 from mlops_homework.features.test_build_features import input_data
 

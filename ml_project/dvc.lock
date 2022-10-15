@@ -27,15 +27,18 @@ stages:
       md5: f045eab17af3261cd087277414464715
       size: 1967
   train model:
-    cmd: mlops_homework_train_baseline_model
+    cmd: mlops_homework_train_model
     deps:
     - path: data/processed/heart_cleveland_upload.csv
       md5: 5c332a87ef9e7a13583d71320b7c7687
       size: 123502
-    - path: mlops_homework/models/train_baseline_model.py
-      md5: bc076557dc2776729f1c400be9a253f1
-      size: 1580
+    - path: mlops_homework/models/baseline/train_baseline_model.py
+      md5: 7e3608185010dbc2b3f38e5baeaf8f09
+      size: 1538
+    - path: mlops_homework/models/train_model.py
+      md5: 376843fb0b6fe0fb8750e77484efa814
+      size: 347
     outs:
     - path: models/baseline.pkl
-      md5: 57247191055905fc55663101ac68f8af
-      size: 10792
+      md5: ed3481c3b1f64d5dd7e84c468ed72319
+      size: 10801

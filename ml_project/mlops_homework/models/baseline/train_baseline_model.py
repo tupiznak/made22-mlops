@@ -13,7 +13,7 @@ class BaselineModel(LogisticRegressionCV):
     pass
 
 
-def main(random_state=1):
+def train_model(test_split_size: float, random_state: int):
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.INFO, format=log_fmt)
 
@@ -26,8 +26,8 @@ def main(random_state=1):
     target = df["condition"]
 
     logger.info('Split data...')
-    x_train, x_test, y_train, y_test = train_test_split(x_input, target, test_size=0.85,
-                                                        random_state=random_state)
+    x_train, x_test, y_train, y_test = train_test_split(
+        x_input, target, test_size=test_split_size, random_state=random_state)
     x_train = x_train.to_numpy()
     x_test = x_test.to_numpy()
 
@@ -45,7 +45,3 @@ def main(random_state=1):
         pickle.dump(model, file)
 
     logger.info('Model trained')
-
-
-if __name__ == '__main__':
-    main()

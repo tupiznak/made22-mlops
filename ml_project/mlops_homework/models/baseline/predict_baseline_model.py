@@ -6,7 +6,7 @@ import pandas as pd
 
 from mlops_homework.data import MODEL_PATH
 from mlops_homework.features.build_features import DataTransformer
-from mlops_homework.models.train_baseline_model import BaselineModel
+from mlops_homework.models.baseline.train_baseline_model import BaselineModel
 
 
 @click.command()
