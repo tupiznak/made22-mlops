@@ -21,3 +21,5 @@ stages:
       - mlops_homework/models/baseline/train_baseline_model.py
     outs:
       - models/baseline.pkl
+    params:
+      - model

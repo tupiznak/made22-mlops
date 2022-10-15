@@ -36,9 +36,14 @@ stages:
       md5: 7e3608185010dbc2b3f38e5baeaf8f09
       size: 1538
     - path: mlops_homework/models/train_model.py
-      md5: 376843fb0b6fe0fb8750e77484efa814
-      size: 347
+      md5: 0f6182387e35eea482c76b26d978b539
+      size: 473
+    params:
+      params.yaml:
+        model:
+          name: baseline
+          test_split_size: 0.7
     outs:
     - path: models/baseline.pkl
-      md5: ed3481c3b1f64d5dd7e84c468ed72319
+      md5: ed86eb0766c192dc9417a0e220ca7b1b
       size: 10801
