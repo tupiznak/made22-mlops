@@ -9,9 +9,13 @@ from mlops_homework.features.build_features import DataTransformer
 from mlops_homework.models.train_baseline_model import BaselineModel
 
 
-@click.command
-@click.option('--features-file', help='Input file with features in csv.')
-@click.option('--targets-file', help='Output file for save targets.')
+@click.command()
+@click.option('--features-file', help='Input file with features in csv.', required=True)
+@click.option('--targets-file', help='Output file for save targets.', required=True)
+def main(features_file, targets_file):
+    predict(features_file, targets_file)
+
+
 def predict(features_file: str, targets_file: str):
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.INFO, format=log_fmt)
@@ -43,4 +47,4 @@ def predict(features_file: str, targets_file: str):
 
 
 if __name__ == '__main__':
-    predict()
+    main()

@@ -28,6 +28,8 @@ def main(random_state=1):
     logger.info('Split data...')
     x_train, x_test, y_train, y_test = train_test_split(x_input, target, test_size=0.85,
                                                         random_state=random_state)
+    x_train = x_train.to_numpy()
+    x_test = x_test.to_numpy()
 
     cv = StratifiedKFold(n_splits=5)
     model = BaselineModel(penalty="l2", cv=cv, max_iter=10000, tol=0.01)

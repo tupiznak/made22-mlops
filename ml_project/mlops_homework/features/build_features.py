@@ -1,12 +1,12 @@
 import logging
 import pickle
 
-import pandas as pd
 import numpy as np
-from dotenv import find_dotenv, load_dotenv
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from mlops_homework.data import DATA_PATH, MODEL_PATH
+import pandas as pd
 from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+from mlops_homework.data import DATA_PATH, MODEL_PATH
 
 CAT_FEATURES_ONE_HOT = ['sex', 'cp', 'restecg', 'thal']
 CAT_FEATURES_LABEL = ['fbs', 'exang', 'slope', 'ca']
@@ -18,15 +18,17 @@ class DataTransformer(BaseEstimator, TransformerMixin):
         super().__init__()
         self.encoder = OneHotEncoder()
         self.scaler = StandardScaler()
-        self.categorical_features_idx: set[int] = set()
-        self.real_features_idx: set[int] = set()
+        self.categorical_features_idx: list[int] = []
+        self.categorical_features: list[str] = []
+        self.real_features_idx: list[int] = []
         self.columns: list[str] = []
 
     def fit_categorical(self, x_data: pd.DataFrame, categorical_features):
         self.encoder.fit(x_data[categorical_features])
-        self.categorical_features_idx = {x_data.columns.get_loc(f) for f in categorical_features}
-        self.real_features_idx = {f for f in range(x_data.shape[1])
-                                  if f not in self.categorical_features_idx}
+        self.categorical_features_idx = [x_data.columns.get_loc(f) for f in categorical_features]
+        self.real_features_idx = [f for f in range(x_data.shape[1])
+                                  if f not in self.categorical_features_idx]
+        self.categorical_features = categorical_features
         categorical_features = set(categorical_features)
         self.columns = [col for col in x_data.columns if col not in categorical_features] + \
                        list(self.encoder.get_feature_names_out())
@@ -45,7 +47,9 @@ class DataTransformer(BaseEstimator, TransformerMixin):
         return self.columns
 
     def transform_categorical(self, x_batch: np.ndarray):
-        cat_data = self.encoder.transform(x_batch[:, list(self.categorical_features_idx)]).toarray()
+        data = pd.DataFrame(data=x_batch[:, list(self.categorical_features_idx)],
+                            columns=self.categorical_features)
+        cat_data = self.encoder.transform(data).toarray()
         return np.concatenate((x_batch[:, list(self.real_features_idx)], cat_data), axis=1)
 
     def transform_scaler(self, x_batch: np.ndarray):
@@ -58,6 +62,9 @@ class DataTransformer(BaseEstimator, TransformerMixin):
 
 
 def main():
+    log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    logging.basicConfig(level=logging.INFO, format=log_fmt)
+
     logger = logging.getLogger('process data')
 
     logger.info('Begin preprocessing...')
@@ -90,8 +97,4 @@ def main():
 
 
 if __name__ == '__main__':
-    log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    logging.basicConfig(level=logging.INFO, format=log_fmt)
-
-    load_dotenv(find_dotenv())
     main()

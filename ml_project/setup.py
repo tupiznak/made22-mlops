@@ -12,6 +12,7 @@ setup(
             "mlops_homework_download_dataset = mlops_homework.data.load_dataset:main",
             "mlops_homework_process_dataset = mlops_homework.features.build_features:main",
             "mlops_homework_train_baseline_model = mlops_homework.models.train_baseline_model:main",
+            "mlops_homework_predict_baseline_model = mlops_homework.models.predict_baseline_model:main",
         ]
     },
 )
