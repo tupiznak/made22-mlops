@@ -1,0 +1,4 @@
+random_state: 1
+model:
+  name: baseline
+  test_split_size: 0.8

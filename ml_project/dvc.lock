@@ -42,8 +42,8 @@ stages:
       params.yaml:
         model:
           name: baseline
-          test_split_size: 0.85
+          test_split_size: 0.8
     outs:
     - path: models/baseline.pkl
-      md5: ed3481c3b1f64d5dd7e84c468ed72319
+      md5: c6d7f333cf28a9bec997bf1bfa6d81c8
       size: 10801
