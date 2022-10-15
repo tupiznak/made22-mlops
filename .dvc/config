@@ -1,5 +1,6 @@
 [core]
     analytics = false
+    remote = origin
 [hydra]
     enabled = True
     config_dir = ml_project/mlops_homework/conf

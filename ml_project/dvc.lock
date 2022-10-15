@@ -33,8 +33,8 @@ stages:
       md5: 5c332a87ef9e7a13583d71320b7c7687
       size: 123502
     - path: mlops_homework/models/baseline/train_baseline_model.py
-      md5: 7e3608185010dbc2b3f38e5baeaf8f09
-      size: 1538
+      md5: 10c4dea2ac234004b22a988d2218b8d0
+      size: 1993
     - path: mlops_homework/models/train_model.py
       md5: ec411997631507ba751bbe18d3389707
       size: 458
