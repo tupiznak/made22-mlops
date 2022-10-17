@@ -3,6 +3,16 @@ made22-mlops
 
 Homework MADE 2022 MLOps
 
+Запуски:
+----------
+нужны переменные окружения `KAGGLE_USERNAME`, `KAGGLE_KEY`, `MLFLOW_TRACKING_URI`
+
+можно просто запустить `dvc exp run`
+`mlops_homework_download_dataset` - загрузить датасет
+`mlops_homework_process_dataset` - предобработать датасет
+`mlops_homework_train_model` - запустить тренировку
+`mlops_homework_predict_baseline_model --features-file FILE --targets-file FILE` - дать предсказания
+
 Project Organization
 ------------
 
