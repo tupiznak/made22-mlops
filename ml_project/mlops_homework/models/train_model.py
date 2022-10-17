@@ -1,4 +1,7 @@
+import os
+
 import hydra
+from dotenv import load_dotenv, find_dotenv
 from mlflow import set_tracking_uri, log_param
 
 from mlops_homework.conf.config import Config
@@ -9,7 +12,8 @@ import dvc.api
 
 @hydra.main(version_base=None, config_path='../conf', config_name="config")
 def main(cfg: Config):
-    set_tracking_uri('postgresql+psycopg2://mlflow:mlflow@mlflow-database:5432/mlflow')
+    load_dotenv(find_dotenv())
+    set_tracking_uri(os.environ['MLFLOW_TRACKING_URI'])
     dvc_params = dvc.api.params_show()
     [setattr(cfg, k, v) for k, v in dvc_params.items()]
     log_param('test_split_size', cfg.model.test_split.size)
