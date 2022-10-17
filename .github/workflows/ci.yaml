@@ -33,6 +33,7 @@ jobs:
         run: |
           export KAGGLE_USERNAME=${{ secrets.KAGGLE_USERNAME }}
           export KAGGLE_KEY=${{ secrets.KAGGLE_KEY }}
+          export MLFLOW_TRACKING_URI=${{ secrets.MLFLOW_TRACKING_URI }}
           cd ml_project
           dvc exp run
           pytest
