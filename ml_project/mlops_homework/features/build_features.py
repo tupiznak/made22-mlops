@@ -66,6 +66,7 @@ class DataTransformer(BaseEstimator, TransformerMixin):
 
 @hydra.main(version_base=None, config_path='../conf', config_name="config")
 def main(cfg: Config):
+    # FIXME need help
     try:
         dvc_params = dvc.api.params_show()
         [setattr(cfg, k, v) for k, v in dvc_params.items()]
