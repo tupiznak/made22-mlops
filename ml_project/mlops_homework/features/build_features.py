@@ -33,8 +33,8 @@ class DataTransformer(BaseEstimator, TransformerMixin):
                                   if f not in self.categorical_features_idx]
         self.categorical_features = categorical_features
         categorical_features = set(categorical_features)
-        self.columns = [col for col in x_data.columns if col not in categorical_features] + \
-                       list(self.encoder.get_feature_names_out())
+        self.columns = ([col for col in x_data.columns if col not in categorical_features] +
+                        list(self.encoder.get_feature_names_out()))
         return self.encoder
 
     def fit_scaler(self, x_data: np.ndarray):
