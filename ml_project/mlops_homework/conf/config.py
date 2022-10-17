@@ -10,8 +10,14 @@ class ModelConfig:
 
 
 @dataclass
+class PreprocessingConfig:
+    categorical_features: str
+
+
+@dataclass
 class Config:
     model: ModelConfig
+    preprocessing: PreprocessingConfig
     random_state: int
 
 

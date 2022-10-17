@@ -14,7 +14,6 @@ pandas
 sklearn
 seaborn
 pandas-profiling[notebook]
-torch
 dvc
 pytest
 numpy

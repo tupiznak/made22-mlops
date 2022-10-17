@@ -1,5 +1,7 @@
 defaults:
   - _self_
-  - model/baseline
+  - model: baseline
+  - preprocessing: transform_strategy/encode_not_ordered
+  - base_config
 
 random_state: 1

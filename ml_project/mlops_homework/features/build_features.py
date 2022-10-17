@@ -1,11 +1,14 @@
 import logging
 import pickle
 
+import dvc.api
+import hydra
 import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
+from mlops_homework.conf.config import Config
 from mlops_homework.data import DATA_PATH, MODEL_PATH
 
 CAT_FEATURES_ONE_HOT = ['sex', 'cp', 'restecg', 'thal']
@@ -61,7 +64,13 @@ class DataTransformer(BaseEstimator, TransformerMixin):
         return x_batch
 
 
-def main():
+@hydra.main(version_base=None, config_path='../conf', config_name="config")
+def main(cfg: Config):
+    try:
+        dvc_params = dvc.api.params_show()
+        [setattr(cfg, k, v) for k, v in dvc_params.items()]
+    except FileNotFoundError:
+        pass
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.INFO, format=log_fmt)
 
@@ -73,7 +82,10 @@ def main():
     x_input = df.drop(columns=['condition'])
     targets = df['condition']
 
-    categorical_features = CAT_FEATURES_ONE_HOT
+    if cfg.preprocessing.categorical_features == 'all':
+        categorical_features = CAT_FEATURES_ONE_HOT + CAT_FEATURES_LABEL
+    else:
+        categorical_features = CAT_FEATURES_ONE_HOT
     encoder = DataTransformer()
     encoder.fit(x_data=x_input, categorical_features=categorical_features)
 
