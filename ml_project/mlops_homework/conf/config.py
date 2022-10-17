@@ -4,9 +4,14 @@ from hydra.core.config_store import ConfigStore
 
 
 @dataclass
+class SplitConfig:
+    size: float
+
+
+@dataclass
 class ModelConfig:
     name: str
-    test_split_size: float
+    test_split: SplitConfig
 
 
 @dataclass

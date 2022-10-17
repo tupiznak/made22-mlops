@@ -11,4 +11,4 @@ def main(cfg: Config):
     dvc_params = dvc.api.params_show()
     [setattr(cfg, k, v) for k, v in dvc_params.items()]
     if cfg.model.name == 'baseline':
-        train_model(test_split_size=cfg.model.test_split_size, random_state=cfg.random_state)
+        train_model(test_split_size=cfg.model.test_split.size, random_state=cfg.random_state)

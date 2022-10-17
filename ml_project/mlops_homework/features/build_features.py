@@ -72,6 +72,7 @@ def main(cfg: Config):
         [setattr(cfg, k, v) for k, v in dvc_params.items()]
     except FileNotFoundError:
         pass
+    print(cfg)
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.INFO, format=log_fmt)
 
