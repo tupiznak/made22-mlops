@@ -21,10 +21,13 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          pip install -r ml_project/requirements.txt
+          cd ml_project
+          pip install -r requirements.txt
       - name: Lint with flake8
         run: |
+          cd ml_project
           flake8 . --count --max-line-length=120 --show-source --statistics --ignore=F403,F405,W605,F811
       - name: Test with pytest
         run: |
+          cd ml_project
           pytest
