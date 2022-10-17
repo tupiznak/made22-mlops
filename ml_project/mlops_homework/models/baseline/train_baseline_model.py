@@ -1,12 +1,12 @@
 import logging
 import pickle
 
+import mlflow
 import pandas as pd
+from mlflow import log_metric
 from sklearn.linear_model import LogisticRegressionCV
 from sklearn.metrics import f1_score
 from sklearn.model_selection import train_test_split, StratifiedKFold
-from mlflow import log_metric, log_param
-import mlflow
 
 from mlops_homework.data import DATA_PATH, MODEL_PATH
 
@@ -18,9 +18,6 @@ class BaselineModel(LogisticRegressionCV):
 def train_model(test_split_size: float, random_state: int):
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.INFO, format=log_fmt)
-
-    log_param('test_split_size', test_split_size)
-    log_param('random_state', random_state)
 
     logger = logging.getLogger('train model')
 
