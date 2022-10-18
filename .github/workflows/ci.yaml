@@ -33,8 +33,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
+        env:
+          MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
         run: |
-          export KAGGLE_USERNAME=${{ secrets.KAGGLE_USERNAME }}
           echo $MLFLOW_TRACKING_URI
           export test=e
           echo $test
