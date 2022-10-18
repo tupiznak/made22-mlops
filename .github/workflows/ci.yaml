@@ -48,7 +48,8 @@ jobs:
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
           TEST: 213
         run: |
-          env
+          export KAGGLE_USERNAME=$KAGGLE_USERNAME
+          MLFLOW_TRACKING_URI=$MLFLOW_TRACKING_URI env
           cd ml_project
           dvc exp run
           pytest
