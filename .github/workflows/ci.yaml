@@ -42,6 +42,8 @@ jobs:
           flake8 . --count --max-line-length=120 --show-source --statistics --ignore=F403,F405,W605,F811
       - name: Test with pytest
         shell: bash
+        environment:
+          name: workflow
         env:
           MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
