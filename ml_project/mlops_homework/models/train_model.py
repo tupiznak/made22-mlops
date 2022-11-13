@@ -4,7 +4,7 @@ import hydra
 from dotenv import load_dotenv, find_dotenv
 from mlflow import set_tracking_uri, log_param
 
-from mlops_homework.conf.config import Config
+from mlops_homework.conf.config import Config, PROJECT_PATH
 from .baseline.train_baseline_model import train_model
 
 import dvc.api
@@ -21,4 +21,5 @@ def main(cfg: Config):
     log_param('encode_strategy', cfg.preprocessing.categorical_features)
     if cfg.model.name == 'baseline':
         train_model(test_split_size=cfg.model.test_split.size, random_state=cfg.random_state,
-                    data_path=cfg.relative_path_to_data_processed_csv, model_path=cfg.relative_path_to_model)
+                    data_path=PROJECT_PATH + cfg.relative_path_to_data_processed_csv,
+                    model_path=PROJECT_PATH + cfg.relative_path_to_model)

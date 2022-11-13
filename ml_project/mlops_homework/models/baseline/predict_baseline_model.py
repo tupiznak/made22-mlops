@@ -12,7 +12,7 @@ from mlops_homework.models.baseline.model import BaselineModel
 @click.command()
 @click.option('--features-file', help='Input file with features in csv.', required=True)
 @click.option('--targets-file', help='Output file for save targets.', required=True)
-def main(features_file, targets_file):
+def main(features_file: str, targets_file: str):
     initialize(version_base=None, config_path='../../conf')
     cfg = compose(config_name="config")
     predict(features_file, targets_file, cfg.relative_path_to_model_encoder, cfg.relative_path_to_model)

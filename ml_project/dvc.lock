@@ -36,11 +36,11 @@ stages:
       md5: 5c332a87ef9e7a13583d71320b7c7687
       size: 123502
     - path: mlops_homework/models/baseline/train_baseline_model.py
-      md5: d659c1e7f7e1b1843f1323e2fddff182
-      size: 1776
+      md5: f71797df30f02dc40633b807670f653d
+      size: 1636
     - path: mlops_homework/models/train_model.py
-      md5: 2d0a3e6009ee715eca952f2037b4bc3d
-      size: 828
+      md5: 69a9fb2d980887bdb96fcbcf34a2400d
+      size: 1002
     params:
       params.yaml:
         model:
@@ -49,5 +49,5 @@ stages:
             size: 0.85
     outs:
     - path: models/baseline.pkl
-      md5: ed3481c3b1f64d5dd7e84c468ed72319
-      size: 10801
+      md5: 7cf487cd72085fcf4bde765c5915e8fe
+      size: 10786
