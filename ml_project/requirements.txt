@@ -9,7 +9,7 @@ kaggle==1.5.12
 notebook==6.4.12
 nb_black==1.0.7
 pandas==1.4.4
-sklearn
+scikit-learn
 seaborn==0.11.2
 pandas-profiling[notebook]==3.3.0
 dvc==2.30
