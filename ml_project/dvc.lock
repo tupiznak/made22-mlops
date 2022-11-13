@@ -17,15 +17,18 @@ stages:
       md5: 9f536dad38229ca519687b116f1d632a
       size: 11106
     - path: mlops_homework/features/build_features.py
-      md5: 6f2ff9ba72cb0154f7f969d4688a31fb
-      size: 4010
+      md5: 82d3f261724098b50ee548c637b02dfc
+      size: 1845
+    - path: mlops_homework/features/data_transformer.py
+      md5: 3f993dc6ffdbd5de72f2917ec94dbe0f
+      size: 2214
     outs:
     - path: data/processed/heart_cleveland_upload.csv
       md5: 5c332a87ef9e7a13583d71320b7c7687
       size: 123502
     - path: models/encoder_baseline.pkl
-      md5: f045eab17af3261cd087277414464715
-      size: 1967
+      md5: 917b6edbac0c61f158196c603efc6714
+      size: 1969
   train model:
     cmd: mlops_homework_train_model
     deps:
@@ -33,11 +36,11 @@ stages:
       md5: 5c332a87ef9e7a13583d71320b7c7687
       size: 123502
     - path: mlops_homework/models/baseline/train_baseline_model.py
-      md5: 76cca4ec12f3ea709244eb791115cde4
-      size: 1882
+      md5: d659c1e7f7e1b1843f1323e2fddff182
+      size: 1776
     - path: mlops_homework/models/train_model.py
-      md5: a24cc01c1448cd69aef615b43b9021b7
-      size: 458
+      md5: 2d0a3e6009ee715eca952f2037b4bc3d
+      size: 828
     params:
       params.yaml:
         model:
