@@ -1,9 +1,10 @@
 import os
 from dataclasses import dataclass
-
+from dotenv import load_dotenv, find_dotenv
 from hydra.core.config_store import ConfigStore
 
-PROJECT_PATH = os.getenv('PROJECT_PATH', None)
+load_dotenv(find_dotenv())
+PROJECT_PATH = os.environ.get('PROJECT_PATH', None)
 if PROJECT_PATH is None:
     raise ModuleNotFoundError('need set PROJECT_PATH env')
 
