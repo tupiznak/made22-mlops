@@ -29,8 +29,12 @@ class Config:
     model: ModelConfig
     preprocessing: PreprocessingConfig
     random_state: int
-    relative_path_to_data_storage: str
-    relative_path_to_reports_storage: str
+    relative_path_to_data_raw: str
+    relative_path_to_data_raw_csv: str
+    relative_path_to_data_processed_csv: str
+    relative_path_to_reports_eda: str
+    relative_path_to_model_encoder: str
+    relative_path_to_model: str
 
 
 ConfigStore.instance().store(name="base_config", node=Config)

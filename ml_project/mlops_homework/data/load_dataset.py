@@ -1,11 +1,13 @@
 import logging
 
+import hydra
 from dotenv import find_dotenv, load_dotenv
 
-from mlops_homework.data import DATA_PATH
+from mlops_homework.conf.config import PROJECT_PATH, Config
 
 
-def main():
+@hydra.main(version_base=None, config_path='../conf', config_name="config")
+def main(cfg: Config):
     logger = logging.getLogger('download dataset')
 
     logger.info('Try kaggle auth...')
@@ -19,7 +21,7 @@ def main():
 
     logger.info('Downloading dataset...')
     api.dataset_download_files('cherngs/heart-disease-cleveland-uci',
-                               path=DATA_PATH.joinpath('raw'),
+                               path=PROJECT_PATH + cfg.relative_path_to_data_raw,
                                unzip=True)
     logger.info('Dataset downloaded')
 

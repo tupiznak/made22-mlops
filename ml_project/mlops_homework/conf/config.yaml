@@ -6,5 +6,9 @@ defaults:
 
 
 random_state: 1
-relative_path_to_data_storage: data/raw/heart_cleveland_upload.csv
-relative_path_to_reports_storage: reports/EDA.html
+relative_path_to_data_raw: data/raw
+relative_path_to_data_raw_csv: data/raw/heart_cleveland_upload.csv
+relative_path_to_data_processed_csv: data/processed/heart_cleveland_upload.csv
+relative_path_to_reports_eda: reports/EDA.html
+relative_path_to_model_encoder: models/encoder_baseline.pkl
+relative_path_to_model: models/baseline.pkl

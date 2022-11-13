@@ -20,4 +20,5 @@ def main(cfg: Config):
     log_param('random_state', cfg.random_state)
     log_param('encode_strategy', cfg.preprocessing.categorical_features)
     if cfg.model.name == 'baseline':
-        train_model(test_split_size=cfg.model.test_split.size, random_state=cfg.random_state)
+        train_model(test_split_size=cfg.model.test_split.size, random_state=cfg.random_state,
+                    data_path=cfg.relative_path_to_data_processed_csv, model_path=cfg.relative_path_to_model)

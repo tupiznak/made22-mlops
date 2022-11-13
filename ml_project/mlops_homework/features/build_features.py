@@ -5,8 +5,7 @@ import dvc.api
 import hydra
 import pandas as pd
 
-from mlops_homework.conf.config import Config
-from mlops_homework.data import DATA_PATH, MODEL_PATH
+from mlops_homework.conf.config import Config, PROJECT_PATH
 from .data_transformer import DataTransformer
 
 CAT_FEATURES_ONE_HOT = ['sex', 'cp', 'restecg', 'thal']
@@ -28,7 +27,7 @@ def main(cfg: Config):
 
     logger.info('Begin preprocessing...')
 
-    df = pd.read_csv(DATA_PATH.joinpath('raw/heart_cleveland_upload.csv'))
+    df = pd.read_csv(PROJECT_PATH + cfg.relative_path_to_data_raw_csv)
     x_input = df.drop(columns=['condition'])
     targets = df['condition']
 
@@ -40,7 +39,7 @@ def main(cfg: Config):
     encoder.fit(x_data=x_input, categorical_features=categorical_features)
 
     logger.info('Save encoder...')
-    with open(MODEL_PATH.joinpath('encoder_baseline.pkl'), 'wb') as file:
+    with open(PROJECT_PATH + cfg.relative_path_to_model_encoder, 'wb') as file:
         pickle.dump(encoder, file)
 
     x_transform = pd.concat(
@@ -53,7 +52,7 @@ def main(cfg: Config):
         ),
         axis=1,
     )
-    x_transform.to_csv(DATA_PATH.joinpath('processed/heart_cleveland_upload.csv'), index=False)
+    x_transform.to_csv(PROJECT_PATH + cfg.relative_path_to_data_processed_csv, index=False)
 
     logger.info('Preprocess finished')
 
