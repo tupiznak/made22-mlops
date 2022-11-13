@@ -6,3 +6,5 @@ defaults:
 
 
 random_state: 1
+relative_path_to_data_storage: data/raw/heart_cleveland_upload.csv
+relative_path_to_reports_storage: reports/EDA.html
