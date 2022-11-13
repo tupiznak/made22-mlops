@@ -1,10 +1,10 @@
 import numpy as np
 import pandas as pd
-from sklearn.base import BaseEstimator, TransformerMixin
+import sklearn
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 
-class DataTransformer(BaseEstimator, TransformerMixin):
+class DataTransformer(sklearn.base.BaseEstimator, sklearn.base.TransformerMixin):
 
     def __init__(self):
         super().__init__()
