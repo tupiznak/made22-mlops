@@ -12,7 +12,7 @@ from mlops_homework.models.baseline.model import BaselineModel
 
 
 def train_model(config_model: ModelConfig, data_path: str, model_path: str):
-    test_split_size = config_model.test_split
+    test_split_size = config_model.test_split.size
     random_state = config_model.random_state
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.INFO, format=log_fmt)
