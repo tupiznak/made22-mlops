@@ -3,3 +3,8 @@ defaults:
   - test_split: big_test_split
 
 name: baseline
+penalty: l2
+random_state: 1
+max_iter: 10000
+tol: 0.01
+fold_splits: 5

@@ -20,6 +20,8 @@ def main(cfg: Config):
     log_param('random_state', cfg.random_state)
     log_param('encode_strategy', cfg.preprocessing.categorical_features)
     if cfg.model.name == 'baseline':
-        train_model(test_split_size=cfg.model.test_split.size, random_state=cfg.random_state,
+        train_model(config_model=cfg.model,
                     data_path=PROJECT_PATH + cfg.relative_path_to_data_processed_csv,
                     model_path=PROJECT_PATH + cfg.relative_path_to_model)
+    else:
+        raise NotImplementedError('incorrect model')

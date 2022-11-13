@@ -28,8 +28,8 @@ def main(cfg: Config):
     logger.info('Begin preprocessing...')
 
     df = pd.read_csv(PROJECT_PATH + cfg.relative_path_to_data_raw_csv)
-    x_input = df.drop(columns=['condition'])
-    targets = df['condition']
+    x_input = df.drop(columns=[cfg.target_name])
+    targets = df[cfg.target_name]
 
     if cfg.preprocessing.categorical_features == 'all':
         categorical_features = CAT_FEATURES_ONE_HOT + CAT_FEATURES_LABEL

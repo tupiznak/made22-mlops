@@ -18,6 +18,11 @@ class SplitConfig:
 class ModelConfig:
     name: str
     test_split: SplitConfig
+    penalty: str
+    max_iter: int
+    tol: float
+    fold_splits: int
+    random_state: int
 
 
 @dataclass
@@ -36,6 +41,7 @@ class Config:
     relative_path_to_reports_eda: str
     relative_path_to_model_encoder: str
     relative_path_to_model: str
+    target_name: str
 
 
 ConfigStore.instance().store(name="base_config", node=Config)

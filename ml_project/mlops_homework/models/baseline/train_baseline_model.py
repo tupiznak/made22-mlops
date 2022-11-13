@@ -7,10 +7,13 @@ from mlflow import log_metric
 from sklearn.metrics import f1_score
 from sklearn.model_selection import train_test_split, StratifiedKFold
 
+from mlops_homework.conf.config import ModelConfig
 from mlops_homework.models.baseline.model import BaselineModel
 
 
-def train_model(test_split_size: float, random_state: int, data_path: str, model_path: str):
+def train_model(config_model: ModelConfig, data_path: str, model_path: str):
+    test_split_size = config_model.test_split
+    random_state = config_model.random_state
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.INFO, format=log_fmt)
 
@@ -28,8 +31,9 @@ def train_model(test_split_size: float, random_state: int, data_path: str, model
     x_train = x_train.to_numpy()
     x_test = x_test.to_numpy()
 
-    cv = StratifiedKFold(n_splits=5)
-    model = BaselineModel(penalty="l2", cv=cv, max_iter=10000, tol=0.01)
+    cv = StratifiedKFold(n_splits=config_model.fold_splits)
+    model = BaselineModel(penalty=config_model.penalty, cv=cv,
+                          max_iter=config_model.max_iter, tol=config_model.tol)
 
     logger.info('Training model...')
     model.fit(x_train, y_train)
