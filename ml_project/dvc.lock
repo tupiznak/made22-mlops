@@ -1,0 +1,59 @@
+schema: '2.0'
+stages:
+  download data:
+    cmd: mlops_homework_download_dataset
+    deps:
+    - path: mlops_homework/data/load_dataset.py
+      md5: 4b878917d93f22cb2a93dcaad1624c4b
+      size: 1047
+    outs:
+    - path: data/raw/heart_cleveland_upload.csv
+      md5: 9f536dad38229ca519687b116f1d632a
+      size: 11106
+  process data:
+    cmd: mlops_homework_process_dataset
+    deps:
+    - path: data/raw/heart_cleveland_upload.csv
+      md5: 9f536dad38229ca519687b116f1d632a
+      size: 11106
+    - path: mlops_homework/features/build_features.py
+      md5: 460e61b029e249d10382e13c3c52f006
+      size: 1811
+    - path: mlops_homework/features/data_transformer.py
+      md5: 7373a0a8c6b5d1ca1333c9b4f80056c9
+      size: 2198
+    outs:
+    - path: data/processed/heart_cleveland_upload.csv
+      md5: 5c332a87ef9e7a13583d71320b7c7687
+      size: 123502
+    - path: models/encoder_baseline.pkl
+      md5: 917b6edbac0c61f158196c603efc6714
+      size: 1969
+  train model:
+    cmd: mlops_homework_train_model
+    deps:
+    - path: data/processed/heart_cleveland_upload.csv
+      md5: 5c332a87ef9e7a13583d71320b7c7687
+      size: 123502
+    - path: mlops_homework/models/baseline/train_baseline_model.py
+      md5: 29a965eaca532815a365df72e6b3706d
+      size: 1886
+    - path: mlops_homework/models/train_model.py
+      md5: 4be643aa8ca6e17a991875f78bb9a561
+      size: 1014
+    params:
+      params.yaml:
+        model:
+          name: baseline
+          penalty: l2
+          random_state: 1
+          max_iter: 10000
+          tol: 0.01
+          fold_splits: 5
+          target_name: condition
+          test_split:
+            size: 0.85
+    outs:
+    - path: models/baseline.pkl
+      md5: 7cf487cd72085fcf4bde765c5915e8fe
+      size: 10786

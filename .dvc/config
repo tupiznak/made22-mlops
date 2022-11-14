@@ -1,0 +1,9 @@
+[core]
+    analytics = false
+    remote = origin
+[hydra]
+    enabled = True
+    config_dir = ml_project/mlops_homework/conf
+    config_name = config
+['remote "origin"']
+    url = https://dagshub.com/tupiznak/made22-mlops.dvc
