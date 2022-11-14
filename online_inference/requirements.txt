@@ -5,3 +5,5 @@
 fastapi==0.87.0
 uvicorn[standard]==0.19.0
 httpx==0.23.0
+pydantic==1.9.2
+anyio[trio]==3.6.2
