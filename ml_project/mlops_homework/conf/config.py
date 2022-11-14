@@ -23,6 +23,7 @@ class ModelConfig:
     tol: float
     fold_splits: int
     random_state: int
+    target_name: str
 
 
 @dataclass

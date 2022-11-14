@@ -8,3 +8,4 @@ random_state: 1
 max_iter: 10000
 tol: 0.01
 fold_splits: 5
+target_name: condition

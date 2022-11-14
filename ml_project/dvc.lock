@@ -36,11 +36,11 @@ stages:
       md5: 5c332a87ef9e7a13583d71320b7c7687
       size: 123502
     - path: mlops_homework/models/baseline/train_baseline_model.py
-      md5: a0fab4e7fdffd9b8e18307570811670b
-      size: 1860
+      md5: 29a965eaca532815a365df72e6b3706d
+      size: 1886
     - path: mlops_homework/models/train_model.py
-      md5: cabde364e4140861018cf78cd32a5c85
-      size: 1015
+      md5: 4be643aa8ca6e17a991875f78bb9a561
+      size: 1014
     params:
       params.yaml:
         model:
@@ -50,6 +50,7 @@ stages:
           max_iter: 10000
           tol: 0.01
           fold_splits: 5
+          target_name: condition
           test_split:
             size: 0.85
     outs:

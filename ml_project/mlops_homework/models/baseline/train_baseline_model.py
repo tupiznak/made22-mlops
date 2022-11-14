@@ -22,8 +22,8 @@ def train_model(config_model: ModelConfig, data_path: str, model_path: str):
     logger.info('Prepare model...')
 
     df = pd.read_csv(data_path)
-    x_input = df.drop(columns=["condition"])
-    target = df["condition"]
+    x_input = df.drop(columns=[config_model.target_name])
+    target = df[config_model.target_name]
 
     logger.info('Split data...')
     x_train, x_test, y_train, y_test = train_test_split(

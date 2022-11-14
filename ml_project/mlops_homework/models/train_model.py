@@ -1,13 +1,12 @@
 import os
 
+import dvc.api
 import hydra
 from dotenv import load_dotenv, find_dotenv
 from mlflow import set_tracking_uri, log_param
 
 from mlops_homework.conf.config import Config, PROJECT_PATH
 from .baseline.train_baseline_model import train_model
-
-import dvc.api
 
 
 @hydra.main(version_base=None, config_path='../conf', config_name="config")
