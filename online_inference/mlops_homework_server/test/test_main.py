@@ -53,6 +53,7 @@ async def test_predict_not_valid(client):
 
     response = client.post("/predict", data=json.dumps(valid_body))
     assert response.status_code == 200, response.content
+    assert json.loads(response.content) == {'message': {'result': 0}}
 
     def check_is_invalid_field(key: str, value):
         invalid_body = valid_body.copy()

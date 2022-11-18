@@ -1,12 +1,21 @@
 import asyncio
-import json
 import logging
 from asyncio import sleep
+from io import StringIO
+
+import pandas as pd
 from fastapi import FastAPI
+from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import HTTPException, RequestValidationError
+from hydra import initialize_config_dir, compose
 from starlette.responses import PlainTextResponse
 
+from mlops_homework.conf.config import PROJECT_PATH, Config
+from mlops_homework.models.baseline.predict_baseline_model import predict as predict_model
 from mlops_homework_server.server.model_data import ModelData, ModelFields
+
+initialize_config_dir(version_base=None, config_dir=f'{PROJECT_PATH}mlops_homework/conf')
+config: Config = compose(config_name="config")
 
 model = ModelData()
 app = FastAPI()
@@ -44,4 +53,12 @@ async def check_health():
 
 @app.post("/predict")
 async def predict(fields: ModelFields):
-    pass
+    features = StringIO()
+    targets = StringIO()
+    df = pd.DataFrame.from_dict({k: [v] for k, v in jsonable_encoder(fields).items()})
+    df.to_csv(features, index=False)
+    features.seek(0)
+    predict_model(features_file=features, targets_file=targets,
+                  encoder_path=PROJECT_PATH + config.relative_path_to_model_encoder,
+                  model_path=PROJECT_PATH + config.relative_path_to_model)
+    return {'message': {'result': int(targets.getvalue().strip())}}

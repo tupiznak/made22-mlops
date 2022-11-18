@@ -74,21 +74,22 @@ class ModelFields(BaseModel):
         def check_in_cat(obj_type, val: int):
             if val not in obj_type().__dict__.values():
                 raise ValueError(f'{obj_type} not in exist category')
+            return val
 
         field: ModelField = kwargs['field']
         match field:
             case ModelField(name='sex'):
-                check_in_cat(Sex, v)
+                return check_in_cat(Sex, v)
             case ModelField(name='cp'):
-                check_in_cat(ChestPainType, v)
+                return check_in_cat(ChestPainType, v)
             case ModelField(name='restecg'):
-                check_in_cat(RestingElectrocardiographic, v)
+                return check_in_cat(RestingElectrocardiographic, v)
             case ModelField(name='exang'):
-                check_in_cat(ExerciseInducedAngina, v)
+                return check_in_cat(ExerciseInducedAngina, v)
             case ModelField(name='thal'):
-                check_in_cat(Thal, v)
+                return check_in_cat(Thal, v)
             case ModelField(name='slope'):
-                check_in_cat(Slope, v)
+                return check_in_cat(Slope, v)
 
 
 class ModelData(BaseModel):

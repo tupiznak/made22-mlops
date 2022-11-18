@@ -2,6 +2,7 @@ import logging
 import pickle
 
 import click
+import numpy as np
 import pandas as pd
 from hydra import compose, initialize
 
@@ -42,8 +43,7 @@ def predict(features_file: str, targets_file: str, encoder_path: str, model_path
     targets = model.predict(x_batch)
 
     logger.info('Save data...')
-    with open(targets_file, 'w') as file:
-        file.writelines([f'{y}\r\n' for y in targets])
+    np.savetxt(targets_file, targets, fmt='%i')
 
     logger.info('Model predicted')
 
