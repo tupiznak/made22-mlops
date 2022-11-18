@@ -9,6 +9,8 @@ setup(
     license='',
     entry_points={
         "console_scripts": [
+            'run_server=mlops_homework_server.server.run:main',
+            'run_req_generator=mlops_homework_server.server.request_generator:main'
         ]
     },
 )
