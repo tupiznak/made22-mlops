@@ -1,0 +1,10 @@
+**/venv
+**/.idea
+**/.pytest_cache
+**/*.egg*
+**/mlruns
+**/build
+**/outputs
+**/__pycache__
+**/.git
+**/.dvc*
