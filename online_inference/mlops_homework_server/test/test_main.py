@@ -3,8 +3,8 @@ from asyncio import sleep
 
 import pytest
 from fastapi.testclient import TestClient
+
 from mlops_homework_server.server.main import app
-from mlops_homework_server.server.model_data import ModelFields
 
 
 @pytest.fixture
