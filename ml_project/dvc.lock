@@ -27,7 +27,7 @@ stages:
       md5: 5c332a87ef9e7a13583d71320b7c7687
       size: 123502
     - path: models/encoder_baseline.pkl
-      md5: 917b6edbac0c61f158196c603efc6714
+      md5: 0e7b625c5220e6aafe082dd710d1938f
       size: 1969
   train model:
     cmd: mlops_homework_train_model

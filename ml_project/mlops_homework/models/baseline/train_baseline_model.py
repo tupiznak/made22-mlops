@@ -46,7 +46,10 @@ def train_model(config_model: ModelConfig, data_path: str, model_path: str):
     with open(model_path, 'wb') as file:
         pickle.dump(model, file)
 
-    mlflow.sklearn.log_model(sk_model=model, artifact_path='model',
-                             registered_model_name='baseline')
+    try:
+        mlflow.sklearn.log_model(sk_model=model, artifact_path='model',
+                                 registered_model_name='baseline')
+    except mlflow.exceptions.MlflowException:
+        pass
 
     logger.info('Model trained')

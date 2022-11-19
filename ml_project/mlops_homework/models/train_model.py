@@ -12,7 +12,10 @@ from .baseline.train_baseline_model import train_model
 @hydra.main(version_base=None, config_path='../conf', config_name="config")
 def main(cfg: Config):
     load_dotenv(find_dotenv())
-    set_tracking_uri(os.environ['MLFLOW_TRACKING_URI'])
+    try:
+        set_tracking_uri(os.environ['MLFLOW_TRACKING_URI'])
+    except KeyError:
+        pass
     dvc_params = dvc.api.params_show()
     [setattr(cfg, k, v) for k, v in dvc_params.items()]
     log_param('test_split_size', cfg.model.test_split.size)
