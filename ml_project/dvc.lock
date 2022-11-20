@@ -39,8 +39,8 @@ stages:
       md5: 29a965eaca532815a365df72e6b3706d
       size: 1886
     - path: mlops_homework/models/train_model.py
-      md5: 4be643aa8ca6e17a991875f78bb9a561
-      size: 1014
+      md5: c4fa64ba27419df00b6fea585f5484ad
+      size: 1174
     params:
       params.yaml:
         model:
