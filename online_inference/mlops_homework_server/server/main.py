@@ -1,8 +1,10 @@
 import asyncio
 import logging
-from asyncio import sleep
+import os
+import pickle
 from io import StringIO
 
+import mlflow
 import pandas as pd
 from fastapi import FastAPI
 from fastapi.encoders import jsonable_encoder
@@ -11,6 +13,7 @@ from hydra import initialize_config_dir, compose
 from starlette.responses import PlainTextResponse
 
 from mlops_homework.conf.config import PROJECT_PATH, Config
+from mlops_homework.models.baseline.model import BaselineModel
 from mlops_homework.models.baseline.predict_baseline_model import predict as predict_model
 from mlops_homework_server.server.model_data import ModelData, ModelFields
 
@@ -20,6 +23,8 @@ config: Config = compose(config_name="config")
 model = ModelData()
 app = FastAPI()
 logger = logging.getLogger('server')
+logging.basicConfig()
+logger.setLevel(logging.INFO)
 
 
 @app.exception_handler(RequestValidationError)
@@ -27,9 +32,21 @@ async def validation_exception_handler(_, exc: RequestValidationError):
     return PlainTextResponse(exc.json(indent=None), status_code=400)
 
 
+os.environ["AWS_ACCESS_KEY_ID"] = "11111111"
+os.environ["AWS_SECRET_ACCESS_KEY"] = "22222222"
+os.environ["MLFLOW_S3_ENDPOINT_URL"] = f"http://localhost:9000/"
+os.environ["MLFLOW_TRACKING_URI"] = f"http://localhost:5000/"
+
+
 async def load_model():
     logger.info('loading model...')
-    await sleep(.1)
+    try:
+        saved_model: BaselineModel = mlflow.sklearn.load_model('models:/baseline/latest')
+    except Exception as e:
+        logger.error('model not found !!!')
+        raise e
+    with open(PROJECT_PATH + config.relative_path_to_model, 'wb') as file:
+        pickle.dump(saved_model, file)
     model.status = 'ready'
     logger.info('model loaded')
 

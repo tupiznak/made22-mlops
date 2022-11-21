@@ -93,5 +93,4 @@ class ModelFields(BaseModel):
 
 
 class ModelData(BaseModel):
-    model: None = None
     status: ModelStatus = 'loading'

@@ -10,7 +10,8 @@ from .baseline.train_baseline_model import train_model
 
 os.environ["AWS_ACCESS_KEY_ID"] = "11111111"
 os.environ["AWS_SECRET_ACCESS_KEY"] = "22222222"
-os.environ["MLFLOW_S3_ENDPOINT_URL"] = f"http://127.0.0.1:9000/"
+os.environ["MLFLOW_S3_ENDPOINT_URL"] = f"http://localhost:9000/"
+os.environ["MLFLOW_TRACKING_URI"] = f"http://localhost:5000/"
 
 
 @hydra.main(version_base=None, config_path='../conf', config_name="config")
