@@ -20,7 +20,7 @@ default_args = {
 with DAG(
         "train",
         default_args=default_args,
-        schedule_interval="@daily",
+        schedule_interval="@weekly",
         start_date=days_ago(1),
 ) as dag:
     preprocess = DockerOperator(
@@ -64,7 +64,7 @@ with DAG(
                 '--targets-file-train /data/split/{{ ds }}/target_train.csv '
                 '--features-file-test /data/split/{{ ds }}/data_test.csv '
                 '--targets-file-test /data/split/{{ ds }}/target_test.csv '
-                '--file-metrics-validate /data/metrics/{{ ds }}/metric.json '
+                '--file-metrics-validate /data/models/{{ ds }}/metric.json '
                 '--model-path /data/models/{{ ds }}/model.pkl ',
         network_mode="bridge",
         task_id="train",

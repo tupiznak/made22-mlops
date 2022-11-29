@@ -18,22 +18,23 @@ default_args = {
 }
 
 with DAG(
-        "generate",
+        "predict",
         default_args=default_args,
         schedule_interval="@daily",
         start_date=days_ago(1),
 ) as dag:
     DockerOperator(
-        image="made22-mlops-hw3-generate:1.0",
-        command='python /src/generate.py '
+        image="made22-mlops-hw3-predict:1.0",
+        command='python /src/predict.py '
                 '--features-file /data/raw/{{ ds }}/data.csv '
-                '--targets-file /data/raw/{{ ds }}/target.csv',
+                '--targets-file /data/predictions/{{ ds }}/predictions.csv '
+                '--model-path /data/models/{{ ds }}/model.pkl ',
         network_mode="bridge",
-        task_id="generate",
+        task_id="prediction",
         do_xcom_push=False,
         mount_tmp_dir=False,
         mounts=[
             Mount(source=f"{PROJECT_PATH}/data", target="/data", type='bind'),
-            Mount(source=f"{PROJECT_PATH}/docker/generate", target="/src", type='bind'),
+            Mount(source=f"{PROJECT_PATH}/docker/predict", target="/src", type='bind'),
         ]
     )

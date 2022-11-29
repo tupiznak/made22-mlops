@@ -6,7 +6,6 @@ import click
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import f1_score
-from sklearn.model_selection import train_test_split
 
 
 @click.command()
@@ -38,9 +37,6 @@ def main(features_file_train: str, targets_file_train: str,
 
     with open(model_path, 'wb') as file:
         pickle.dump(clf, file)
-
-
-    # print(clf.predict([[0, 0, 0, 0]]))
 
 
 if __name__ == '__main__':
