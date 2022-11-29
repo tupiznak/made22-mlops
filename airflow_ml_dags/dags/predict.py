@@ -1,8 +1,10 @@
 import os
 from datetime import timedelta
+from pathlib import Path
 
 from airflow import DAG
 from airflow.providers.docker.operators.docker import DockerOperator
+from airflow.sensors.python import PythonSensor
 from airflow.utils.dates import days_ago
 from docker.types import Mount
 
@@ -23,7 +25,13 @@ with DAG(
         schedule_interval="@daily",
         start_date=days_ago(1),
 ) as dag:
-    DockerOperator(
+    waiting = PythonSensor(
+        task_id='check-data',
+        python_callable=lambda p: Path(p).exists(),
+        op_args=['/opt/airflow/data/models/{{ ds }}/model.pkl'],
+        poke_interval=10
+    )
+    predict = DockerOperator(
         image="made22-mlops-hw3-predict:1.0",
         command='python /src/predict.py '
                 '--features-file /data/raw/{{ ds }}/data.csv '
@@ -38,3 +46,5 @@ with DAG(
             Mount(source=f"{PROJECT_PATH}/docker/predict", target="/src", type='bind'),
         ]
     )
+
+    waiting >> predict

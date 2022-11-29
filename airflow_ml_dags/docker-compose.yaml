@@ -63,9 +63,9 @@ x-airflow-common:
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
+    - ./data/:/opt/airflow/data/
     - ./plugins:/opt/airflow/plugins
     - /var/run/docker.sock:/var/run/docker.sock:ro
-    - data-volume:/data
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -294,5 +294,4 @@ services:
 
 volumes:
   postgres-db-volume:
-  data-volume:
   s3-volume:

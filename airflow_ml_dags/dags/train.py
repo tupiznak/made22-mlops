@@ -1,8 +1,10 @@
 import os
 from datetime import timedelta
+from pathlib import Path
 
 from airflow import DAG
 from airflow.providers.docker.operators.docker import DockerOperator
+from airflow.sensors.python import PythonSensor
 from airflow.utils.dates import days_ago
 from docker.types import Mount
 
@@ -11,8 +13,8 @@ if PROJECT_PATH is None:
     raise ModuleNotFoundError('need set PROJECT_PATH env')
 
 default_args = {
-    "owner": "airflow",
-    "email": ["airflow@example.com"],
+    "owner": "qqq",
+    "email": ["qqq@example.com"],
     "retries": 1,
     "retry_delay": timedelta(minutes=5),
 }
@@ -23,6 +25,12 @@ with DAG(
         schedule_interval="@weekly",
         start_date=days_ago(1),
 ) as dag:
+    waiting = PythonSensor(
+        task_id='check-data',
+        python_callable=lambda p: Path(p).exists(),
+        op_args=['/opt/airflow/data/raw/{{ ds }}/data.csv'],
+        poke_interval=10
+    )
     preprocess = DockerOperator(
         image="made22-mlops-hw3-train:1.0",
         command='python /src/preprocess.py '
@@ -75,3 +83,4 @@ with DAG(
             Mount(source=f"{PROJECT_PATH}/docker/train", target="/src", type='bind'),
         ]
     )
+    waiting >> preprocess >> split >> train
