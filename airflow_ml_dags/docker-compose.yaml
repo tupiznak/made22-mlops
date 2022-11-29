@@ -75,6 +75,21 @@ x-airflow-common:
       condition: service_healthy
 
 services:
+  mlflow:
+    hostname: mlflow
+    image: ajdioawd21e/mlops:1.0
+    ports:
+      - 5000:5000
+      - 9000:9000
+    expose:
+      - 5000:5000
+      - 9000:9000
+    volumes:
+      - s3-volume:/s3_storage
+      - ${PWD}/entrypoint.sh:/entrypoint.sh
+    entrypoint: /entrypoint.sh
+    command: ""
+
   postgres:
     image: postgres:13
     environment:
@@ -280,3 +295,4 @@ services:
 volumes:
   postgres-db-volume:
   data-volume:
+  s3-volume:

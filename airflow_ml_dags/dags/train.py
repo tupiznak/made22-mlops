@@ -66,7 +66,7 @@ with DAG(
                 '--targets-file-test /data/split/{{ ds }}/target_test.csv '
                 '--file-metrics-validate /data/models/{{ ds }}/metric.json '
                 '--model-path /data/models/{{ ds }}/model.pkl ',
-        network_mode="bridge",
+        network_mode="host",
         task_id="train",
         do_xcom_push=False,
         mount_tmp_dir=False,

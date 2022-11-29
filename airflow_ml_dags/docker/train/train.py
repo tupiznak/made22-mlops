@@ -1,11 +1,19 @@
 import json
+import os
 import pickle
 from pathlib import Path
 
 import click
+import mlflow
 import numpy as np
+from mlflow import log_metric
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import f1_score
+
+os.environ["AWS_ACCESS_KEY_ID"] = "11111111"
+os.environ["AWS_SECRET_ACCESS_KEY"] = "22222222"
+os.environ["MLFLOW_S3_ENDPOINT_URL"] = f"http://0.0.0.0:9000/"
+os.environ["MLFLOW_TRACKING_URI"] = f"http://0.0.0.0:5000/"
 
 
 @click.command()
@@ -37,6 +45,9 @@ def main(features_file_train: str, targets_file_train: str,
 
     with open(model_path, 'wb') as file:
         pickle.dump(clf, file)
+
+    log_metric("f1", f1)
+    mlflow.sklearn.log_model(sk_model=clf, artifact_path='model', registered_model_name='baseline')
 
 
 if __name__ == '__main__':

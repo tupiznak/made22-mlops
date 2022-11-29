@@ -29,7 +29,7 @@ with DAG(
                 '--features-file /data/raw/{{ ds }}/data.csv '
                 '--targets-file /data/predictions/{{ ds }}/predictions.csv '
                 '--model-path /data/models/{{ ds }}/model.pkl ',
-        network_mode="bridge",
+        network_mode="host",
         task_id="prediction",
         do_xcom_push=False,
         mount_tmp_dir=False,
