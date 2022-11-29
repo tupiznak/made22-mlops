@@ -29,7 +29,7 @@ with DAG(
                 '--features-file /data/raw/{{ ds }}/data.csv '
                 '--targets-file /data/raw/{{ ds }}/target.csv',
         network_mode="bridge",
-        task_id="docker-airflow-download",
+        task_id="generate",
         do_xcom_push=False,
         mount_tmp_dir=False,
         mounts=[

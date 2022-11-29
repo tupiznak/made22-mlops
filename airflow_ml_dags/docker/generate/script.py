@@ -13,8 +13,8 @@ def main(features_file: str, targets_file: str):
                                n_informative=2, n_redundant=0,
                                random_state=0, shuffle=False)
     Path(features_file).parent.mkdir(parents=True, exist_ok=True)
-    np.savetxt(features_file, X, fmt='%f')
-    np.savetxt(targets_file, y, fmt='%i')
+    np.savetxt(features_file, X, fmt='%f', delimiter=",")
+    np.savetxt(targets_file, y, fmt='%i', delimiter=',')
 
 
 if __name__ == '__main__':
