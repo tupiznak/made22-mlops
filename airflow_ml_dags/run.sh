@@ -4,6 +4,6 @@ if [[ -z "${PROJECT_PATH}" ]]; then
 fi
 
 mkdir -p ./dags ./logs ./plugins ./data
-echo -e "AIRFLOW_UID=$(id -u)" > .env
+echo -e "AIRFLOW_UID=$(id -u)" >> .env
 sudo chmod 666 /var/run/docker.sock
 docker-compose -f docker-compose.yaml up -d

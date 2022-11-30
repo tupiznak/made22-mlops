@@ -12,7 +12,7 @@ if PROJECT_PATH is None:
 
 default_args = {
     "owner": "airflow",
-    "email": ["airflow@example.com"],
+    "email": [os.environ["AIRFLOW__SMTP__SMTP_MAIL_FROM"]],
     "retries": 1,
     "retry_delay": timedelta(minutes=5),
 }
@@ -25,7 +25,7 @@ with DAG(
 ) as dag:
     DockerOperator(
         image="made22-mlops-hw3-generate:1.0",
-        command='python123 /src/generate.py '
+        command='python /src/generate.py '
                 '--features-file /data/raw/{{ ds }}/data.csv '
                 '--targets-file /data/raw/{{ ds }}/target.csv',
         network_mode="bridge",
