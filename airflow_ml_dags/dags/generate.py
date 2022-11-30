@@ -25,7 +25,7 @@ with DAG(
 ) as dag:
     DockerOperator(
         image="made22-mlops-hw3-generate:1.0",
-        command='python /src/generate.py '
+        command='python123 /src/generate.py '
                 '--features-file /data/raw/{{ ds }}/data.csv '
                 '--targets-file /data/raw/{{ ds }}/target.csv',
         network_mode="bridge",

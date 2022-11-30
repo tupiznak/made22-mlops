@@ -48,6 +48,13 @@ x-airflow-common:
   # build: .
   environment:
     &airflow-common-env
+    AIRFLOW__SMTP__SMTP_HOST: smtp.gmail.com
+    AIRFLOW__SMTP__SMTP_STARTTLS: True
+    AIRFLOW__SMTP__SMTP_SSL: False
+    AIRFLOW__SMTP__SMTP_USER: ${USER_SMTP}
+    AIRFLOW__SMTP__SMTP_PASSWORD: ${PASSWORD_SMTP}
+    AIRFLOW__SMTP__SMTP_PORT: 587
+    AIRFLOW__SMTP__SMTP_MAIL_FROM: ${USER_SMTP}
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
     # For backward compatibility, with Airflow <2.3
@@ -63,6 +70,7 @@ x-airflow-common:
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
+    - ./tests/:/opt/airflow/tests/
     - ./data/:/opt/airflow/data/
     - ./plugins:/opt/airflow/plugins
     - /var/run/docker.sock:/var/run/docker.sock:ro
